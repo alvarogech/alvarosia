@@ -578,39 +578,46 @@ footer{background:var(--black);padding:80px 60px 52px}
           <div class="field"><label for="name">Nome completo *</label><input type="text" id="name" placeholder="Seu nome"><span class="err-msg">Campo obrigatório</span></div>
           <div class="field"><label for="whatsapp">WhatsApp *</label><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" maxlength="15"><span class="err-msg">Número inválido</span></div>
         </div>
-        <div class="field"><label for="age">Faixa etária *</label>
-          <select id="age"><option value="">Selecione</option><option>18–24 anos</option><option>25–34 anos</option><option>35–44 anos</option><option>45–54 anos</option><option>55+ anos</option></select>
-          <span class="err-msg">Campo obrigatório</span>
+        <div class="form-row">
+          <div class="field"><label for="age">Faixa etária *</label>
+            <select id="age"><option value="">Selecione</option><option>18–24 anos</option><option>25–34 anos</option><option>35–44 anos</option><option>45–54 anos</option><option>55+ anos</option></select>
+            <span class="err-msg">Campo obrigatório</span>
+          </div>
+          <div class="field"><label for="gender">Gênero *</label>
+            <select id="gender"><option value="">Selecione</option><option>Feminino</option><option>Masculino</option><option>Não-binário</option><option>Prefiro não informar</option></select>
+            <span class="err-msg">Campo obrigatório</span>
+          </div>
         </div>
         <div class="field"><label for="concern">O que mais te incomoda hoje? *</label><textarea id="concern" placeholder="Ex: aparência de cansaço, perda de contorno, flacidez, assimetria…"></textarea><span class="err-msg">Descreva sua preocupação</span></div>
         <div style="margin-bottom:8px"><label style="font-size:0.6rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--gray-dark)">Fotos do rosto *</label></div>
-        <input type="file" id="photo-frontal" class="upload-input" accept="image/*">
-        <input type="file" id="photo-direito" class="upload-input" accept="image/*">
-        <input type="file" id="photo-esquerdo" class="upload-input" accept="image/*">
+
         <div class="upload-group">
           <div class="upload-item"><label>Frontal</label>
-            <div class="upload-box" id="box-frontal" data-input="photo-frontal">
+            <label class="upload-box" id="box-frontal" for="photo-frontal">
+              <input type="file" id="photo-frontal" class="upload-input" accept="image/*" capture="user">
               <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B0A99E" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B0A99E" stroke-width="1"/></svg>
               <span class="upload-hint">Toque para<br>adicionar</span>
               <img class="upload-preview" id="prev-frontal" alt="">
               <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
+            </label>
           </div>
           <div class="upload-item"><label>Perfil D.</label>
-            <div class="upload-box" id="box-perfil-d" data-input="photo-direito">
+            <label class="upload-box" id="box-perfil-d" for="photo-direito">
+              <input type="file" id="photo-direito" class="upload-input" accept="image/*">
               <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B0A99E" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B0A99E" stroke-width="1"/></svg>
               <span class="upload-hint">Perfil<br>direito</span>
               <img class="upload-preview" id="prev-direito" alt="">
               <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
+            </label>
           </div>
           <div class="upload-item"><label>Perfil E.</label>
-            <div class="upload-box" id="box-perfil-e" data-input="photo-esquerdo">
+            <label class="upload-box" id="box-perfil-e" for="photo-esquerdo">
+              <input type="file" id="photo-esquerdo" class="upload-input" accept="image/*">
               <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B0A99E" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B0A99E" stroke-width="1"/></svg>
               <span class="upload-hint">Perfil<br>esquerdo</span>
               <img class="upload-preview" id="prev-esquerdo" alt="">
               <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
+            </label>
           </div>
         </div>
         <div class="cb-field">
@@ -694,7 +701,7 @@ footer{background:var(--black);padding:80px 60px 52px}
 
 <script>
   const CONFIG = {
-    PROXY_URL: "https://script.google.com/macros/s/AKfycbziROwvf5RCB4kEJ0oF1Oit14rtFc1aqW44r7tLCkrp3o81VW7KiEcO2FgH0Ig0tvTy/exec",
+    PROXY_URL: "https://script.google.com/macros/s/AKfycbzn5gjQdCElhU7-duYAFwps1jOF9XOiDqaRufOGwU8q2IEbXkBiv59TsUVaIHn4_3BM/exec",
     WHATSAPP:  "5562996965656",
   };
 
@@ -732,6 +739,7 @@ function setupUpload(inputId, boxId, key) {
   const input = document.getElementById(inputId);
   const box   = document.getElementById(boxId);
   const prev  = document.getElementById('prev-' + key);
+  if (!input || !box || !prev) return;
   input.addEventListener('change', () => {
     const file = input.files[0];
     if (!file) return;
@@ -796,7 +804,7 @@ function runLoadingSteps(onDone) {
 // ============================================================
 //  CALL PROXY (Apps Script → Claude + Sheets)
 // ============================================================
-async function callProxy(name, whatsapp, age, concern, images) {
+async function callProxy(name, whatsapp, age, gender, concern, images) {
   const url = CONFIG.PROXY_URL;
   if (!url || url === 'COLE_A_URL_DO_APPS_SCRIPT_AQUI') throw new Error('PROXY_NOT_CONFIGURED');
 
@@ -807,7 +815,7 @@ async function callProxy(name, whatsapp, age, concern, images) {
     res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ name, whatsapp, age, concern, images })
+      body: JSON.stringify({ name, whatsapp, age, gender, concern, images })
     });
   } catch(netErr) {
     console.error('[Stimma] Erro de rede:', netErr);
@@ -968,7 +976,7 @@ function showResult() {
 document.getElementById('analysisForm').addEventListener('submit', async e => {
   e.preventDefault();
 
-  const fields = ['name','whatsapp','age','concern'].map(id => ({el:document.getElementById(id), valid:validateField(document.getElementById(id))}));
+  const fields = ['name','whatsapp','age','gender','concern'].map(id => ({el:document.getElementById(id), valid:validateField(document.getElementById(id))}));
   const allValid = fields.every(f => f.valid);
   const consent = document.getElementById('consent').checked;
 
@@ -983,6 +991,7 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
   const whatsapp = document.getElementById('whatsapp').value.trim();
   const age      = document.getElementById('age').value;
   const concern  = document.getElementById('concern').value.trim();
+  const gender   = document.getElementById('gender').value;
 
   // Button loading state
   const btn = document.getElementById('submitBtn');
@@ -1014,7 +1023,7 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
   runLoadingSteps(() => { loadingDone = true; checkBothDone(); });
 
   try {
-    const text = await callProxy(name, whatsapp, age, concern, imageData);
+    const text = await callProxy(name, whatsapp, age, gender, concern, imageData);
     analysisResult = text;
     analysisDone = true;
     checkBothDone();
