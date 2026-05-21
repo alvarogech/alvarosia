@@ -712,7 +712,7 @@ footer{background:var(--black);padding:80px 60px 52px}
 
 <script>
   const CONFIG = {
-    PROXY_URL: "https://script.google.com/macros/s/AKfycbzn5gjQdCElhU7-duYAFwps1jOF9XOiDqaRufOGwU8q2IEbXkBiv59TsUVaIHn4_3BM/exec",
+    PROXY_URL: "https://script.google.com/macros/s/AKfycbwvnv0n7dvqdlUYDO7ucwQJUkoaN2B2s-VZMPHqRam0u8FnIWiQO9zWCA7JLG0Gtzc3/exec",
     WHATSAPP:  "5562996965656",
   };
 
@@ -848,6 +848,7 @@ async function callProxy(name, whatsapp, age, gender, concern, images) {
 }
 
 // ============================================================
+// ============================================================
 //  BUILD REPORT FROM AI JSON
 // ============================================================
 function buildReport(data, name) {
@@ -860,6 +861,50 @@ function buildReport(data, name) {
   greetEl.textContent = data.greeting || `Olá, ${name}! Sua análise inicial está pronta.`;
   wrap.appendChild(greetEl);
 
+  // Photo Analysis with Canvas Markers
+  const frontalB64 = imageData['frontal'];
+  if (frontalB64 && data.marcacoes && data.marcacoes.length) {
+    const sec = document.createElement('p');
+    sec.className = 'r-sec-label';
+    sec.textContent = 'Análise facial visual';
+    wrap.appendChild(sec);
+
+    const grid = document.createElement('div');
+    grid.className = 'photo-analysis';
+
+    const photoCol = document.createElement('div');
+    photoCol.className = 'pa-photo';
+    photoCol.innerHTML = `
+      <p class="pa-photo-label">Foto frontal · marcações</p>
+      <div class="pa-photo-wrap">
+        <img id="analysisPhoto" src="data:image/jpeg;base64,${frontalB64}" alt="Sua análise">
+        <canvas id="analysisCanvas"></canvas>
+      </div>
+      <p class="pa-photo-note">Marcações estimadas com base na estrutura facial observada.</p>`;
+    grid.appendChild(photoCol);
+
+    const ptCol = document.createElement('div');
+    ptCol.className = 'pa-points';
+    ptCol.innerHTML = '<p class="pa-points-label">Pontos identificados</p><div class="pa-list" id="paList"></div>';
+    grid.appendChild(ptCol);
+
+    wrap.appendChild(grid);
+
+    const photo = photoCol.querySelector('#analysisPhoto');
+    photo.onload = () => drawMarkers(photo, data.marcacoes);
+    if (photo.complete) drawMarkers(photo, data.marcacoes);
+
+    const paList = ptCol.querySelector('#paList');
+    data.marcacoes.forEach((m, i) => {
+      const card = document.createElement('div');
+      card.className = 'pa-card' + (i >= 3 ? ' muted' : '');
+      card.innerHTML = `
+        <p class="pa-area">${m.area}${m.terco ? ' · ' + m.terco : ''}</p>
+        <p class="pa-title">${m.nota}</p>`;
+      paList.appendChild(card);
+    });
+  }
+
   // Idade percebida
   if (data.idade_percebida) {
     const idadeEl = document.createElement('div');
@@ -869,12 +914,12 @@ function buildReport(data, name) {
       <div>
         <p class="idade-title">Idade percebida estimada</p>
         <p class="idade-value">${data.idade_percebida}</p>
-        <p class="idade-note">Estimativa visual baseada em sinais como textura da pele, sustentação, contorno e expressão. Não representa idade real nem diagnóstico clínico.</p>
+        <p class="idade-note">Estimativa visual baseada em sinais como textura da pele, sustentação, contorno e expressão facial. Não representa idade real nem diagnóstico clínico.</p>
       </div>`;
     wrap.appendChild(idadeEl);
   }
 
-  // Metrics grid (harmonia, sustentacao, contorno, pele, simetria)
+  // Metrics
   const metricFields = [
     { key:'harmonia',       label:'Harmonia facial' },
     { key:'sustentacao',    label:'Sustentação' },
@@ -885,7 +930,7 @@ function buildReport(data, name) {
   const metrics = metricFields.filter(m => data[m.key]);
   if (metrics.length) {
     const secLabel = document.createElement('p');
-    secLabel.className = 'report-section-label';
+    secLabel.className = 'r-sec-label';
     secLabel.textContent = 'Leitura estética inicial';
     wrap.appendChild(secLabel);
     const grid = document.createElement('div');
@@ -902,7 +947,7 @@ function buildReport(data, name) {
   // Traits
   if (data.traits && data.traits.length) {
     const secLabel = document.createElement('p');
-    secLabel.className = 'report-section-label';
+    secLabel.className = 'r-sec-label';
     secLabel.textContent = 'Seus pontos de beleza';
     wrap.appendChild(secLabel);
     const grid = document.createElement('div');
@@ -925,9 +970,9 @@ function buildReport(data, name) {
   if (data.highlights && data.highlights.length) {
     const hl = document.createElement('div');
     hl.className = 'report-highlights';
-    hl.innerHTML = `<p class="report-highlight-title">Oportunidades de harmonização</p>
-      <ul class="highlight-list">${data.highlights.map(h =>
-        `<li><span class="highlight-dot"></span><span>${h}</span></li>`
+    hl.innerHTML = `<p class="rh-title">Oportunidades de harmonização</p>
+      <ul class="hl-list">${data.highlights.map(h =>
+        `<li><span class="hl-dot"></span><span>${h}</span></li>`
       ).join('')}</ul>`;
     wrap.appendChild(hl);
   }
@@ -942,6 +987,89 @@ function buildReport(data, name) {
 }
 
 // ============================================================
+//  DRAW CANVAS MARKERS
+// ============================================================
+function drawMarkers(imgEl, marcacoes) {
+  const canvas = document.getElementById('analysisCanvas');
+  if (!canvas) return;
+  const W = imgEl.offsetWidth;
+  const H = imgEl.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // Subtle guide lines
+  ctx.save();
+  ctx.strokeStyle = 'rgba(196,170,114,0.13)';
+  ctx.lineWidth = 0.5;
+  ctx.setLineDash([3,6]);
+  ctx.beginPath(); ctx.moveTo(W*0.5,H*0.04); ctx.lineTo(W*0.5,H*0.96); ctx.stroke();
+  [0.32,0.52,0.70].forEach(y => {
+    ctx.beginPath(); ctx.moveTo(W*0.06,H*y); ctx.lineTo(W*0.94,H*y); ctx.stroke();
+  });
+  ctx.restore();
+
+  marcacoes.forEach((m, i) => {
+    const px = W * Math.max(0.1, Math.min(0.9, parseFloat(m.xPct) || 0.5));
+    const py = H * Math.max(0.08, Math.min(0.92, parseFloat(m.yPct) || 0.5));
+    const toRight = (m.lado || '').toLowerCase().includes('dir');
+    const gold     = i >= 3 ? 'rgba(196,170,114,0.42)' : '#C4AA72';
+    const goldFaint= i >= 3 ? 'rgba(196,170,114,0.14)' : 'rgba(196,170,114,0.22)';
+    const EDGE_PAD = 10;
+
+    // Outer pulse
+    ctx.save();
+    ctx.beginPath(); ctx.arc(px,py,10,0,Math.PI*2);
+    ctx.strokeStyle = goldFaint; ctx.lineWidth = 1; ctx.stroke();
+    ctx.restore();
+
+    // Inner ring
+    ctx.save();
+    ctx.beginPath(); ctx.arc(px,py,5.5,0,Math.PI*2);
+    ctx.strokeStyle = gold; ctx.lineWidth = 1.3; ctx.stroke();
+    ctx.restore();
+
+    // Center dot
+    ctx.save();
+    ctx.beginPath(); ctx.arc(px,py,2,0,Math.PI*2);
+    ctx.fillStyle = gold; ctx.fill();
+    ctx.restore();
+
+    // Long curved connector to edge
+    const edgeX = toRight ? W - EDGE_PAD : EDGE_PAD;
+    const cpX = toRight ? px + (edgeX-px)*0.5 : px - (px-edgeX)*0.5;
+    const cpY = py - 16;
+    const endY = py - 20;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(toRight ? px+5.5 : px-5.5, py);
+    ctx.quadraticCurveTo(cpX, cpY, edgeX, endY);
+    ctx.strokeStyle = gold; ctx.lineWidth = 0.85; ctx.stroke();
+    ctx.restore();
+
+    // Label pill at edge
+    const label = (m.nota || m.area || '').substring(0, 24);
+    ctx.save();
+    ctx.font = '500 6.5px Jost, sans-serif';
+    const tw = ctx.measureText(label).width;
+    const pw = tw + 10; const ph = 13;
+    const lx = toRight ? W - EDGE_PAD - pw : EDGE_PAD;
+    const ly = endY - ph - 2;
+
+    ctx.fillStyle = 'rgba(20,18,14,0.86)';
+    if (ctx.roundRect) {
+      ctx.beginPath(); ctx.roundRect(lx, ly, pw, ph, 2); ctx.fill();
+    } else { ctx.fillRect(lx, ly, pw, ph); }
+
+    ctx.fillStyle = gold;
+    ctx.textAlign = toRight ? 'right' : 'left';
+    ctx.fillText(label, toRight ? lx+pw-5 : lx+5, ly+9);
+    ctx.restore();
+  });
+}
+
+
 //  SHOW RESULT
 // ============================================================
 let analysisResult = '';
