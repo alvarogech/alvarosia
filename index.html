@@ -854,20 +854,16 @@ document.getElementById('photoChoiceCancel').addEventListener('click', closePhot
 
 document.getElementById('choiceCameraBtn').addEventListener('click', () => {
   closePhotoChoice();
-  // Pequeno delay para o sheet fechar antes de abrir câmera
-  setTimeout(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      openCamera(CHOICE.currentKey);
-    } else {
-      // iOS Safari < 11 ou contexto sem HTTPS: fallback para input file com capture
-      triggerCapture(CHOICE.currentKey);
-    }
-  }, 320);
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    openCamera(CHOICE.currentKey);
+  } else {
+    triggerCapture(CHOICE.currentKey);
+  }
 });
 
 document.getElementById('choiceGalleryBtn').addEventListener('click', () => {
   closePhotoChoice();
-  setTimeout(() => triggerGallery(CHOICE.currentKey), 320);
+  triggerGallery(CHOICE.currentKey);
 });
 
 // ============================================================
@@ -886,15 +882,21 @@ const CAM = {
 };
 
 async function openCamera(key) {
-  CAM.currentKey = key;
-  CAM.facing = 'user'; // sempre começa frontal
-  const step = CAM.steps.find(s => s.key === key) || CAM.steps[0];
-  document.getElementById('camTitle').textContent = step.title;
-  document.getElementById('camInstructionMain').textContent = step.mainTxt;
-  document.getElementById('camInstructionSub').textContent  = step.subTxt;
-  document.getElementById('camModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  await startStream();
+  try {
+    CAM.currentKey = key;
+    CAM.facing = 'user';
+    const step = CAM.steps.find(s => s.key === key) || CAM.steps[0];
+    document.getElementById('camTitle').textContent = step.title;
+    document.getElementById('camInstructionMain').textContent = step.mainTxt;
+    document.getElementById('camInstructionSub').textContent  = step.subTxt;
+    document.getElementById('camModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    await startStream();
+  } catch(e) {
+    console.warn('openCamera error:', e);
+    closeCamera();
+    triggerGallery(key);
+  }
 }
 
 async function startStream() {
@@ -923,7 +925,9 @@ async function startStream() {
 }
 
 function closeCamera() {
-  if (CAM.stream) { CAM.stream.getTracks().forEach(t => t.stop()); CAM.stream = null; }
+  try {
+    if (CAM.stream) { CAM.stream.getTracks().forEach(t => t.stop()); CAM.stream = null; }
+  } catch(e) { CAM.stream = null; }
   document.getElementById('camModal').classList.remove('active');
   document.body.style.overflow = '';
 }
