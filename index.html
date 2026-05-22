@@ -752,7 +752,7 @@ footer{background:var(--black);padding:80px 60px 52px}
 
 <script>
   const CONFIG = {
-    PROXY_URL: "https://script.google.com/macros/s/AKfycby11lFQfN_FMBCJGCjI8CWIJTro-d8LCYMdwb9U_tQ60emoLcDH29LRSODoCBiWQOMk/exec",
+    PROXY_URL: "https://script.google.com/macros/s/AKfycbxSjg4txjhxkljCjnfIAK8pwS5PsRK1zOu343Tg5-uAB5UIlFdBGZXytKMHbL19Djbv/exec",
     WHATSAPP:  "5562996965656",
   };
 
@@ -959,7 +959,7 @@ function runLoadingSteps(onDone) {
 // ============================================================
 async function callProxy(name, whatsapp, age, gender, concern, images) {
   const url = CONFIG.PROXY_URL;
-  if (!url || url === 'https://script.google.com/macros/s/AKfycby11lFQfN_FMBCJGCjI8CWIJTro-d8LCYMdwb9U_tQ60emoLcDH29LRSODoCBiWQOMk/exec') throw new Error('PROXY_NOT_CONFIGURED');
+  if (!url) throw new Error('PROXY_NOT_CONFIGURED');
 
   console.log('[Stimma] Enviando para proxy...', url);
 
@@ -1305,13 +1305,6 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
   // Show loading modal
   document.getElementById('loadingModal').classList.add('active');
   document.body.style.overflow = 'hidden';
-
-  // Check API key
-  if (!CONFIG.PROXY_URL || CONFIG.PROXY_URL === 'https://script.google.com/macros/s/AKfycby11lFQfN_FMBCJGCjI8CWIJTro-d8LCYMdwb9U_tQ60emoLcDH29LRSODoCBiWQOMk/exec') {
-    analysisResult = `Olá, ${name}! 💛\n\nSua análise foi recebida com sucesso. Nossa equipe revisará suas fotos e entrará em contato via WhatsApp para compartilhar as orientações personalizadas.\n\nAguardamos você para uma avaliação presencial com a Dra. Larissa Soares, onde poderemos conversar com cuidado sobre o que realmente faz sentido para você.\n\nNos vemos em breve. 🌿`;
-    runLoadingSteps(showResult);
-    return;
-  }
 
   // Run loading steps in parallel with API call
   let loadingDone = false, analysisDone = false;
