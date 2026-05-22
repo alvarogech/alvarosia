@@ -324,6 +324,21 @@ footer{background:var(--black);padding:80px 60px 52px}
 .d1{transition-delay:0.12s}.d2{transition-delay:0.24s}.d3{transition-delay:0.36s}.d4{transition-delay:0.48s}
 .spinner{width:15px;height:15px;border:1.5px solid rgba(248,244,239,0.3);border-top-color:var(--cream);border-radius:50%;animation:spin 0.8s linear infinite}
 
+/* ── PHOTO CHOICE MODAL ── */
+.photo-choice-modal{position:fixed;inset:0;z-index:600;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s var(--ease)}
+.photo-choice-modal.active{opacity:1;pointer-events:all}
+.photo-choice-backdrop{position:absolute;inset:0;background:rgba(20,18,16,0.55)}
+.photo-choice-sheet{position:relative;width:100%;max-width:480px;background:var(--white);border-radius:16px 16px 0 0;padding:28px 24px 36px;z-index:1;transform:translateY(100%);transition:transform 0.38s var(--ease-out)}
+.photo-choice-modal.active .photo-choice-sheet{transform:translateY(0)}
+.photo-choice-title{font-size:0.58rem;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:22px}
+.photo-choice-btn{width:100%;display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--cream);border:none;cursor:pointer;font-family:var(--sans);margin-bottom:3px;transition:background 0.2s var(--ease)}
+.photo-choice-btn:hover{background:var(--gray-light)}
+.photo-choice-btn svg{flex-shrink:0;color:var(--gray-dark)}
+.photo-choice-btn-label{text-align:left}
+.photo-choice-btn-label p:first-child{font-size:0.88rem;font-weight:400;color:var(--dark);margin-bottom:2px}
+.photo-choice-btn-label p:last-child{font-size:0.68rem;color:var(--gray-mid)}
+.photo-choice-cancel{width:100%;background:transparent;border:none;padding:16px;font-family:var(--sans);font-size:0.72rem;color:var(--gray-mid);letter-spacing:0.12em;cursor:pointer;margin-top:8px}
+
 /* ── RESPONSIVE ── */
 @media(max-width:960px){
   nav{padding:18px 24px}nav.scrolled{padding:12px 24px}
@@ -678,6 +693,29 @@ footer{background:var(--black);padding:80px 60px 52px}
 </footer>
 
 
+<!-- PHOTO CHOICE SHEET -->
+<div class="photo-choice-modal" id="photoChoiceModal">
+  <div class="photo-choice-backdrop" id="photoChoiceBackdrop"></div>
+  <div class="photo-choice-sheet">
+    <p class="photo-choice-title" id="photoChoiceTitle">Foto frontal</p>
+    <button class="photo-choice-btn" id="choiceCameraBtn">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="1" y="5" width="20" height="15" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="11" cy="13" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M7 5l1.5-3h5L15 5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <div class="photo-choice-btn-label">
+        <p>Tirar foto agora</p>
+        <p>Abre a câmera do dispositivo</p>
+      </div>
+    </button>
+    <button class="photo-choice-btn" id="choiceGalleryBtn">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="1" y="1" width="20" height="20" rx="2" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 15l6-6 3.5 3.5 4-5 6.5 7.5" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <div class="photo-choice-btn-label">
+        <p>Escolher da galeria</p>
+        <p>Selecionar foto salva no dispositivo</p>
+      </div>
+    </button>
+    <button class="photo-choice-cancel" id="photoChoiceCancel">Cancelar</button>
+  </div>
+</div>
+
 <!-- CAMERA MODAL -->
 <div class="cam-modal" id="camModal">
   <div class="cam-header">
@@ -787,22 +825,69 @@ wpInput.addEventListener('input', e => {
 const imageData = {}; // { frontal, direito, esquerdo } → base64
 
 // ============================================================
+//  PHOTO CHOICE MODAL
+// ============================================================
+const CHOICE = {
+  currentKey: null,
+  steps: [
+    { key:'frontal',  title:'Foto frontal' },
+    { key:'direito',  title:'Perfil direito (90°)' },
+    { key:'esquerdo', title:'Perfil esquerdo (90°)' },
+  ]
+};
+
+function openPhotoChoice(key) {
+  CHOICE.currentKey = key;
+  const step = CHOICE.steps.find(s => s.key === key) || CHOICE.steps[0];
+  document.getElementById('photoChoiceTitle').textContent = step.title;
+  document.getElementById('photoChoiceModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePhotoChoice() {
+  document.getElementById('photoChoiceModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('photoChoiceBackdrop').addEventListener('click', closePhotoChoice);
+document.getElementById('photoChoiceCancel').addEventListener('click', closePhotoChoice);
+
+document.getElementById('choiceCameraBtn').addEventListener('click', () => {
+  closePhotoChoice();
+  // Pequeno delay para o sheet fechar antes de abrir câmera
+  setTimeout(() => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      openCamera(CHOICE.currentKey);
+    } else {
+      // iOS Safari < 11 ou contexto sem HTTPS: fallback para input file com capture
+      triggerCapture(CHOICE.currentKey);
+    }
+  }, 320);
+});
+
+document.getElementById('choiceGalleryBtn').addEventListener('click', () => {
+  closePhotoChoice();
+  setTimeout(() => triggerGallery(CHOICE.currentKey), 320);
+});
+
+// ============================================================
 //  CAMERA MODAL
 // ============================================================
 const CAM = {
   stream: null,
-  facing: 'user',          // 'user' = frontal, 'environment' = traseira
+  facing: 'user',
   currentKey: null,
   canvas: document.createElement('canvas'),
   steps: [
-    { key:'frontal',  title:'Foto frontal',        mainTxt:'Olhe direto para a câmera',       subTxt:'Rosto centralizado · expressão neutra' },
-    { key:'direito',  title:'Perfil direito (90°)', mainTxt:'Vire completamente para a direita', subTxt:'Nariz alinhado à borda do guia'         },
-    { key:'esquerdo', title:'Perfil esquerdo (90°)',mainTxt:'Vire completamente para a esquerda',subTxt:'Mesmo ângulo do lado oposto'              },
+    { key:'frontal',  title:'Foto frontal',         mainTxt:'Olhe direto para a câmera',        subTxt:'Rosto centralizado · expressão neutra' },
+    { key:'direito',  title:'Perfil direito (90°)',  mainTxt:'Vire completamente para a direita', subTxt:'Nariz alinhado à borda do guia'         },
+    { key:'esquerdo', title:'Perfil esquerdo (90°)', mainTxt:'Vire completamente para a esquerda',subTxt:'Mesmo ângulo do lado oposto'              },
   ]
 };
 
 async function openCamera(key) {
   CAM.currentKey = key;
+  CAM.facing = 'user'; // sempre começa frontal
   const step = CAM.steps.find(s => s.key === key) || CAM.steps[0];
   document.getElementById('camTitle').textContent = step.title;
   document.getElementById('camInstructionMain').textContent = step.mainTxt;
@@ -813,17 +898,26 @@ async function openCamera(key) {
 }
 
 async function startStream() {
-  if (CAM.stream) { CAM.stream.getTracks().forEach(t => t.stop()); }
+  if (CAM.stream) { CAM.stream.getTracks().forEach(t => t.stop()); CAM.stream = null; }
   try {
-    CAM.stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: CAM.facing, width:{ideal:1280}, height:{ideal:960} },
-      audio: false
-    });
-    document.getElementById('camVideo').srcObject = CAM.stream;
+    // iOS requer exact facingMode para câmera frontal
+    const constraints = {
+      audio: false,
+      video: {
+        facingMode: { ideal: CAM.facing },
+        width:  { ideal: 1280 },
+        height: { ideal: 960 }
+      }
+    };
+    CAM.stream = await navigator.mediaDevices.getUserMedia(constraints);
+    const video = document.getElementById('camVideo');
+    video.srcObject = CAM.stream;
+    // iOS às vezes precisa de play() explícito
+    try { await video.play(); } catch(e) { /* autoplay policy — ok em mobile */ }
   } catch(e) {
-    console.warn('Camera error:', e);
+    console.warn('Camera error:', e.name, e.message);
     closeCamera();
-    // fallback: open gallery
+    // Se falhou, oferece galeria como fallback
     triggerGallery(CAM.currentKey);
   }
 }
@@ -841,7 +935,7 @@ function capturePhoto() {
   canvas.height = video.videoHeight || 480;
   const ctx = canvas.getContext('2d');
 
-  // Mirror if front camera
+  // Espelhar câmera frontal
   if (CAM.facing === 'user') {
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
@@ -861,14 +955,16 @@ function savePhoto(key, dataUrl) {
   if (prev) { prev.src = dataUrl; box.classList.add('has-file'); }
   imageData[key] = dataUrl.split(',')[1];
 
-  // Update thumb in camera modal
   const thumb = document.getElementById('thumb' + key.charAt(0).toUpperCase() + key.slice(1));
   if (thumb) { thumb.src = dataUrl; thumb.classList.add('taken'); }
 }
 
+// Galeria: input file padrão (funciona em todos os navegadores)
 function triggerGallery(key) {
   CAM.currentKey = key;
   const gi = document.getElementById('galleryInput');
+  gi.removeAttribute('capture');
+  gi.accept = 'image/*';
   gi.onchange = () => {
     const file = gi.files[0];
     if (!file) return;
@@ -880,29 +976,43 @@ function triggerGallery(key) {
   gi.click();
 }
 
+// Captura direta via input file com capture="user" (fallback iOS sem getUserMedia)
+function triggerCapture(key) {
+  CAM.currentKey = key;
+  const gi = document.getElementById('galleryInput');
+  gi.setAttribute('capture', 'user');
+  gi.accept = 'image/*';
+  gi.onchange = () => {
+    const file = gi.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => savePhoto(CAM.currentKey, ev.target.result);
+    reader.readAsDataURL(file);
+    gi.value = '';
+    gi.removeAttribute('capture');
+  };
+  gi.click();
+}
+
 // Camera modal events
 document.getElementById('camClose').addEventListener('click', closeCamera);
 document.getElementById('camCapture').addEventListener('click', capturePhoto);
 document.getElementById('camGallery').addEventListener('click', () => {
   closeCamera();
-  triggerGallery(CAM.currentKey);
+  setTimeout(() => triggerGallery(CAM.currentKey), 200);
 });
 document.getElementById('camSwitch').addEventListener('click', async () => {
   CAM.facing = CAM.facing === 'user' ? 'environment' : 'user';
   await startStream();
 });
 
-// Bind each upload box to open camera modal
+// Bind cada upload box para abrir o modal de escolha
 function setupUpload(boxId, key) {
   const box = document.getElementById(boxId);
   if (!box) return;
   box.addEventListener('click', (e) => {
     e.preventDefault();
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      openCamera(key);
-    } else {
-      triggerGallery(key);
-    }
+    openPhotoChoice(key);
   });
 }
 setupUpload('box-frontal',  'frontal');
