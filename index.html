@@ -339,6 +339,40 @@ footer{background:var(--black);padding:80px 60px 52px}
 .photo-choice-btn-label p:last-child{font-size:0.68rem;color:var(--gray-mid)}
 .photo-choice-cancel{width:100%;background:transparent;border:none;padding:16px;font-family:var(--sans);font-size:0.72rem;color:var(--gray-mid);letter-spacing:0.12em;cursor:pointer;margin-top:8px}
 
+/* ── CAMERA MODAL ── */
+.cam-modal{position:fixed;inset:0;z-index:700;background:#000;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.3s var(--ease)}
+.cam-modal.active{opacity:1;pointer-events:all}
+.cam-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:rgba(0,0,0,0.7);position:absolute;top:0;left:0;right:0;z-index:10}
+.cam-title{font-family:var(--sans);font-size:0.72rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--cream)}
+.cam-close{background:none;border:none;color:var(--cream);font-size:1.2rem;cursor:pointer;padding:4px 8px;line-height:1;opacity:0.7}
+.cam-close:hover{opacity:1}
+.cam-view{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cam-video{width:100%;height:100%;object-fit:cover}
+.cam-overlay{position:absolute;inset:0;pointer-events:none}
+.cam-cutout{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:min(72vw,320px);height:min(96vw,420px);border:1px solid rgba(196,170,114,0.5)}
+.cam-cutout-bl{position:absolute;bottom:-1px;left:-1px;width:24px;height:24px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold)}
+.cam-cutout-br{position:absolute;bottom:-1px;right:-1px;width:24px;height:24px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold)}
+.cam-guides{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:min(72vw,320px);height:min(96vw,420px);opacity:0.15}
+.cam-guide-v{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--gold)}
+.cam-guide-h1{position:absolute;top:32%;left:0;right:0;height:1px;background:var(--gold)}
+.cam-guide-h2{position:absolute;top:52%;left:0;right:0;height:1px;background:var(--gold)}
+.cam-guide-h3{position:absolute;top:70%;left:0;right:0;height:1px;background:var(--gold)}
+.cam-instruction{position:absolute;bottom:140px;left:0;right:0;text-align:center}
+.cam-instruction p:first-child{font-size:0.88rem;color:var(--cream);font-weight:400;margin-bottom:4px;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
+.cam-instruction p:last-child{font-size:0.68rem;color:rgba(255,255,255,0.6);letter-spacing:0.08em;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
+.cam-preview-bar{position:absolute;bottom:84px;left:0;right:0;display:flex;justify-content:center;gap:8px;pointer-events:none}
+.cam-thumb{width:36px;height:36px;border-radius:4px;object-fit:cover;border:1.5px solid rgba(255,255,255,0.15);opacity:0.4;transition:all 0.3s}
+.cam-thumb.taken{opacity:1;border-color:var(--gold)}
+.cam-footer{position:absolute;bottom:0;left:0;right:0;height:80px;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:space-around;padding:0 40px}
+.cam-btn-gallery{background:none;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.cam-btn-gallery:hover{border-color:var(--gold);color:var(--gold)}
+.cam-btn-capture{width:64px;height:64px;border-radius:50%;background:transparent;border:2px solid var(--cream);position:relative;cursor:pointer;transition:transform 0.15s}
+.cam-btn-capture::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--cream);transition:background 0.15s}
+.cam-btn-capture:active{transform:scale(0.93)}
+.cam-btn-capture:active::after{background:var(--gold)}
+.cam-btn-switch{background:none;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.cam-btn-switch:hover{border-color:var(--gold);color:var(--gold)}
+
 /* ── RESPONSIVE ── */
 @media(max-width:960px){
   nav{padding:18px 24px}nav.scrolled{padding:12px 24px}
@@ -825,48 +859,6 @@ wpInput.addEventListener('input', e => {
 const imageData = {}; // { frontal, direito, esquerdo } → base64
 
 // ============================================================
-//  PHOTO CHOICE MODAL
-// ============================================================
-const CHOICE = {
-  currentKey: null,
-  steps: [
-    { key:'frontal',  title:'Foto frontal' },
-    { key:'direito',  title:'Perfil direito (90°)' },
-    { key:'esquerdo', title:'Perfil esquerdo (90°)' },
-  ]
-};
-
-function openPhotoChoice(key) {
-  CHOICE.currentKey = key;
-  const step = CHOICE.steps.find(s => s.key === key) || CHOICE.steps[0];
-  document.getElementById('photoChoiceTitle').textContent = step.title;
-  document.getElementById('photoChoiceModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closePhotoChoice() {
-  document.getElementById('photoChoiceModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('photoChoiceBackdrop').addEventListener('click', closePhotoChoice);
-document.getElementById('photoChoiceCancel').addEventListener('click', closePhotoChoice);
-
-document.getElementById('choiceCameraBtn').addEventListener('click', () => {
-  closePhotoChoice();
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    openCamera(CHOICE.currentKey);
-  } else {
-    triggerCapture(CHOICE.currentKey);
-  }
-});
-
-document.getElementById('choiceGalleryBtn').addEventListener('click', () => {
-  closePhotoChoice();
-  triggerGallery(CHOICE.currentKey);
-});
-
-// ============================================================
 //  CAMERA MODAL
 // ============================================================
 const CAM = {
@@ -1010,13 +1002,17 @@ document.getElementById('camSwitch').addEventListener('click', async () => {
   await startStream();
 });
 
-// Bind cada upload box para abrir o modal de escolha
+// Bind cada upload box para abrir câmera direto
 function setupUpload(boxId, key) {
   const box = document.getElementById(boxId);
   if (!box) return;
   box.addEventListener('click', (e) => {
     e.preventDefault();
-    openPhotoChoice(key);
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      openCamera(key);
+    } else {
+      triggerGallery(key);
+    }
   });
 }
 setupUpload('box-frontal',  'frontal');
