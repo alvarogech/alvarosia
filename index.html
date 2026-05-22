@@ -231,8 +231,10 @@ nav.scrolled{background:rgba(247,244,239,0.96);backdrop-filter:blur(28px);paddin
 .cb-field{display:flex;align-items:flex-start;gap:14px;margin-bottom:32px}
 .cb-field input{width:15px;height:15px;margin-top:3px;flex-shrink:0;accent-color:var(--dark);cursor:pointer}
 .cb-field span{font-size:0.73rem;color:var(--gray-dark);line-height:1.8}
-.btn-submit{width:100%;background:var(--dark);color:var(--cream);border:none;padding:19px;font-family:var(--sans);font-size:0.68rem;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;transition:background 0.25s var(--ease);position:relative;overflow:hidden}
+.btn-submit{width:100%;background:var(--dark);color:var(--cream);border:none;padding:22px 32px;font-family:var(--sans);font-size:0.72rem;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;cursor:pointer;transition:background 0.25s var(--ease),transform 0.15s var(--ease);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:64px}
+.btn-submit::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.4s var(--ease)}
 .btn-submit:hover:not(:disabled){background:var(--black)}
+.btn-submit:hover:not(:disabled)::after{transform:scaleX(1)}
 .btn-submit:disabled{opacity:0.5;cursor:not-allowed}
 .btn-submit .btn-text{transition:opacity 0.3s}
 .btn-submit .btn-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;gap:10px}
@@ -347,7 +349,7 @@ footer{background:var(--black);padding:80px 60px 52px}
 .cam-close{background:none;border:none;color:var(--cream);font-size:1.2rem;cursor:pointer;padding:4px 8px;line-height:1;opacity:0.7}
 .cam-close:hover{opacity:1}
 .cam-view{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.cam-video{width:100%;height:100%;object-fit:cover}
+.cam-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
 .cam-overlay{position:absolute;inset:0;pointer-events:none}
 .cam-cutout{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:min(72vw,320px);height:min(96vw,420px);border:1px solid rgba(196,170,114,0.5)}
 .cam-cutout-bl{position:absolute;bottom:-1px;left:-1px;width:24px;height:24px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold)}
@@ -930,15 +932,9 @@ function capturePhoto() {
   canvas.width  = video.videoWidth  || 640;
   canvas.height = video.videoHeight || 480;
   const ctx = canvas.getContext('2d');
-
-  // Espelhar câmera frontal
-  if (CAM.facing === 'user') {
-    ctx.translate(canvas.width, 0);
-    ctx.scale(-1, 1);
-  }
+  // O CSS espelha o preview mas o stream original não está espelhado
+  // Para câmera frontal: desespelhar no canvas (foto salva correta para análise)
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  if (CAM.facing === 'user') { ctx.setTransform(1,0,0,1,0,0); }
-
   const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
   savePhoto(CAM.currentKey, dataUrl);
   closeCamera();
@@ -949,7 +945,19 @@ function savePhoto(key, dataUrl) {
   const box  = document.getElementById(boxMap[key]);
   const prev = document.getElementById('prev-' + key);
   if (prev) { prev.src = dataUrl; box.classList.add('has-file'); }
-  imageData[key] = dataUrl.split(',')[1];
+
+  // Comprimir para 800px max e qualidade 0.7 antes de enviar — evita timeout no proxy
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 800;
+    const c = document.createElement('canvas');
+    const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+    c.width  = Math.round(img.width  * scale);
+    c.height = Math.round(img.height * scale);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    imageData[key] = c.toDataURL('image/jpeg', 0.72).split(',')[1];
+  };
+  img.src = dataUrl;
 
   const thumb = document.getElementById('thumb' + key.charAt(0).toUpperCase() + key.slice(1));
   if (thumb) { thumb.src = dataUrl; thumb.classList.add('taken'); }
@@ -1435,20 +1443,21 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
     analysisDone = true;
     checkBothDone();
 
-
   } catch (err) {
     console.error('Erro proxy:', err.message);
-    // Show error in loading screen so user knows what happened
-    document.getElementById('loadingStatus').textContent = 'Erro: ' + err.message;
+    document.getElementById('loadingStatus').textContent = '⚠ ' + err.message;
     document.getElementById('loadingStatus').style.color = '#B04040';
-    analysisResult = JSON.stringify({
-      greeting: `Olá, ${name}! Sua análise foi recebida. 💛`,
-      traits: [],
-      highlights: ['Houve um problema ao gerar a análise automática. Nossa equipe entrará em contato via WhatsApp em breve com orientações personalizadas.'],
-      closing: 'Aguardamos você para uma avaliação presencial com a Dra. Larissa Soares. 🌿'
-    });
-    analysisDone = true;
-    checkBothDone();
+    // Aguarda 3s para o usuário ver o erro, depois mostra tela com fallback
+    setTimeout(() => {
+      analysisResult = JSON.stringify({
+        greeting: `Olá, ${name}! Sua análise foi recebida. 💛`,
+        traits: [],
+        highlights: ['Houve um problema ao gerar a análise automática. Nossa equipe entrará em contato via WhatsApp em breve com orientações personalizadas.'],
+        closing: 'Aguardamos você para uma avaliação presencial com a Dra. Larissa Soares. 🌿'
+      });
+      analysisDone = true;
+      checkBothDone();
+    }, 3000);
   }
 });
 
