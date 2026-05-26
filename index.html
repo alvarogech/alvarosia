@@ -1568,8 +1568,21 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
   runLoadingSteps(() => { loadingDone = true; checkBothDone(); });
 
   try {
+    // Validação mínima: exige pelo menos a foto frontal antes de chamar a IA
+    if (!imageData.frontal) {
+      alert('Por favor, envie pelo menos uma foto frontal para gerar a análise.');
+      btn.disabled = false;
+      btn.classList.remove('is-loading');
+      document.getElementById('loadingModal').classList.remove('active');
+      document.body.style.overflow = '';
+      return;
+    }
+
     // EVENTO DE CONVERSÃO META
-  fbq('track', 'SubmitApplication');
+    if (typeof fbq === 'function') {
+      fbq('track', 'SubmitApplication');
+    }
+
     const text = await callProxy(name, whatsapp, age, gender, concern, imageData);
     analysisResult = text;
     analysisDone = true;
@@ -1603,8 +1616,18 @@ document.getElementById('consent').addEventListener('change', function(){ if(thi
 document.addEventListener('DOMContentLoaded', () => {
   const wp = `https://wa.me/${CONFIG.WHATSAPP}`;
   const wpCta = `https://wa.me/${CONFIG.WHATSAPP}?text=Olá%2C%20acabei%20de%20enviar%20minha%20análise%20facial%20e%20gostaria%20de%20agendar%20minha%20avaliação%20com%20a%20Dra.%20Larissa.`;
-  document.getElementById('footer-wp').href = wp;
-  document.getElementById('result-wp-btn').href = wpCta;
+  const footerWp = document.getElementById('footer-wp');
+  const resultWpBtn = document.getElementById('result-wp-btn');
+
+  if (footerWp) footerWp.href = wp;
+  if (resultWpBtn) {
+    resultWpBtn.href = wpCta;
+    resultWpBtn.addEventListener('click', () => {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Contact');
+      }
+    });
+  }
 });
 
 // ============================================================
