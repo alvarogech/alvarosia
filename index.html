@@ -1568,6 +1568,8 @@ document.getElementById('analysisForm').addEventListener('submit', async e => {
   runLoadingSteps(() => { loadingDone = true; checkBothDone(); });
 
   try {
+    // EVENTO DE CONVERSÃO META
+  fbq('track', 'SubmitApplication');
     const text = await callProxy(name, whatsapp, age, gender, concern, imageData);
     analysisResult = text;
     analysisDone = true;
