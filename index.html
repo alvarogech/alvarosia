@@ -29,13 +29,13 @@ src="https://www.facebook.com/tr?id=954165999636794&ev=PageView&noscript=1"
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://stimma.netlify.app/">
 <meta property="og:title" content="Análise Facial Online · Clínica Stimma">
-<meta property="og:description" content="Envie uma foto e receba sua análise facial online na hora. Conduzida pela equipe da Dra. Larissa Andrade · Goiânia.">
+<meta property="og:description" content="Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério. Conduzida pela equipe da Dra. Larissa Andrade · Goiânia.">
 <meta property="og:image" content="https://stimma.netlify.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Envie uma foto e receba sua análise facial online na hora. Clínica Stimma · Goiânia.">
+<meta name="description" content="Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério. Clínica Stimma · Goiânia.">
 
 <style>
 /* ── TOKENS ── */
@@ -538,6 +538,59 @@ footer { background:var(--dark); padding:64px 40px 44px; }
   .report-traits { grid-template-columns:1fr; }
   .report-metrics { grid-template-columns:1fr 1fr; }
 }
+
+/* ── AJUSTE IDENTIDADE VISUAL: editorial premium ── */
+body { background:#F6F0E8; }
+nav.scrolled { background:rgba(246,240,232,0.96); }
+.hero { background:#F6F0E8; }
+.hero-left::before { content:'STIMMA'; position:absolute; top:92px; left:56px; font-family:var(--serif); font-size:.7rem; letter-spacing:.36em; color:rgba(30,27,22,.38); }
+.hero-title { max-width:620px; font-size:clamp(3rem,5.4vw,6.4rem); letter-spacing:-.035em; line-height:.96; }
+.hero-sub { max-width:470px; font-size:1rem; }
+.hero-right { background:#15130f; }
+.hero-right::before { background:linear-gradient(to right,#F6F0E8 0%,rgba(246,240,232,.72) 23%,transparent 55%); }
+.c-slide img { filter:saturate(.55) contrast(1.08) brightness(.88); object-position:center center; }
+.btn-primary,.btn-submit,.result-cta { border-radius:999px; }
+.nav-cta { border-radius:999px; background:rgba(253,252,250,.34); }
+.lbl { color:#9B7A45; }
+.observe { background:#181511; color:var(--cream); }
+.observe-head h2,.observe-head p { color:var(--cream); }
+.observe-head p { color:rgba(245,241,235,.68); }
+.observe-grid { gap:1px; }
+.obs-card { background:#201C16; }
+.obs-label { color:rgba(245,241,235,.82); }
+.obs-icon path,.obs-icon circle,.obs-icon line,.obs-icon rect { stroke:rgba(212,180,122,.72); }
+.fit-section { padding:110px 40px; background:#F6F0E8; border-top:1px solid var(--border); }
+.fit-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1.1fr; gap:90px; align-items:start; }
+.fit-copy h2 { font-family:var(--serif); font-size:clamp(2rem,3.5vw,3.8rem); font-weight:400; line-height:1.03; letter-spacing:-.025em; color:var(--dark); margin-bottom:24px; }
+.fit-copy h2 em { color:var(--sub); font-style:italic; font-weight:300; }
+.fit-copy p { color:var(--sub); font-size:.92rem; line-height:2; max-width:470px; }
+.fit-list { display:grid; gap:2px; }
+.fit-list div { background:var(--white); padding:28px 30px; display:grid; grid-template-columns:52px 1fr; gap:18px; align-items:start; border:1px solid rgba(30,27,22,.05); }
+.fit-list span { font-family:var(--serif); font-size:1.25rem; color:var(--gold); font-style:italic; }
+.fit-list p { font-size:.88rem; color:var(--text); line-height:1.85; }
+.editorial-results { background:#FDFCFA; }
+.cases-editorial { grid-template-columns:1.25fr .9fr; grid-template-rows:1fr 1fr; gap:10px; }
+.cases-editorial .case-large { grid-row:span 2; }
+.cases-editorial .case img { aspect-ratio:4/5; }
+.cases-editorial .case-large img { aspect-ratio:4/5; }
+.dra { background:#171410; color:var(--cream); }
+.dra-content .dra-title,.dra-sig { color:var(--cream); }
+.dra-content .dra-title em,.dra-text { color:rgba(245,241,235,.66); }
+.dra-frame img { filter:saturate(.65) contrast(1.03); }
+.dra-badge { background:#F6F0E8; }
+.dra-badge-name { color:var(--dark); }
+.dra-cta { color:var(--cream); border-color:rgba(245,241,235,.72); }
+.form-section { background:#F6F0E8; }
+.form-card { box-shadow:0 28px 80px rgba(30,27,22,.08); }
+@media(max-width:768px){
+  .hero-left::before{left:20px;top:70px;}
+  .hero-title{font-size:clamp(2.55rem,11vw,4.2rem);}
+  .fit-inner{grid-template-columns:1fr;gap:40px;}
+  .fit-section{padding:72px 20px;}
+  .cases-editorial{grid-template-columns:1fr;grid-template-rows:auto;}
+  .cases-editorial .case-large{grid-row:auto;}
+}
+
 </style>
 </head>
 <body>
@@ -552,19 +605,19 @@ footer { background:var(--dark); padding:64px 40px 44px; }
   <div class="hero-left">
     <p class="hero-eyebrow">Análise facial online · Clínica Stimma</p>
     <h1 class="hero-title">
-      Você percebe que mudou…<br>
-      <em>mas talvez ainda não saiba exatamente o quê.</em>
+      Seu rosto comunica antes de qualquer procedimento.<br>
+      <em>Entenda o que vale a pena preservar, realçar ou tratar.</em>
     </h1>
-    <p class="hero-sub">Envie uma foto e receba sua análise facial online na hora.</p>
+    <p class="hero-sub">Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério.</p>
     <div class="hero-actions">
       <a href="#analise" class="btn-primary">Enviar foto para análise</a>
-      <p class="hero-trust">Online · Instantânea · Informativa</p>
+      <p class="hero-trust">Online · Inicial · Com direcionamento humano</p>
     </div>
   </div>
   <div class="hero-right">
     <div class="hero-carousel" id="heroCarousel">
-      <div class="c-slide active"><img src="assets/dra-larissa-1.jpeg" alt="Dra. Larissa Andrade · Clínica Stimma"></div>
-      <div class="c-slide"><img src="assets/dra-larissa-2.jpeg" alt="Dra. Larissa Andrade · Harmonização Facial"></div>
+      <div class="c-slide active"><img src="assets/dra-larissa-editorial-01.jpeg" alt="Resultado natural Stimma"></div>
+      <div class="c-slide"><img src="assets/dra-larissa-editorial-02.jpeg" alt="Resultado harmonização Stimma"></div>
     </div>
     <div class="hero-face-guide">
       <svg class="face-svg" viewBox="0 0 220 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -578,45 +631,6 @@ footer { background:var(--dark); padding:64px 40px 44px; }
     </div>
   </div>
   <div class="hero-scroll"><span class="scroll-bar"></span><span>Ver resultados</span></div>
-</section>
-
-<!-- ANTES/DEPOIS -->
-<section class="results">
-  <div class="results-inner">
-    <div class="results-head reveal">
-      <p class="lbl">Resultados reais</p>
-      <h2>Resultados naturais começam com entendimento.</h2>
-      <p>Antes de qualquer procedimento, existe uma etapa essencial: compreender o rosto com critério.</p>
-    </div>
-    <div class="cases">
-      <div class="case reveal d1">
-        <img src="assets/antes-depois-1.jpg" alt="Antes e depois harmonização facial · Clínica Stimma">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Harmonização facial</p><p>Stimma · Goiânia</p></div>
-      </div>
-      <div class="case reveal d2">
-        <img src="assets/antes-depois-2.jpg" alt="Antes e depois rejuvenescimento facial · Clínica Stimma">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Rejuvenescimento facial</p><p>Stimma · Goiânia</p></div>
-      </div>
-      <div class="case reveal d1">
-        <img src="assets/antes-depois-3.jpeg" alt="Antes e depois contorno facial · Clínica Stimma">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Contorno facial</p><p>Stimma · Goiânia</p></div>
-      </div>
-      <div class="case reveal d2">
-        <img src="assets/antes-depois-4.jpg" alt="Antes e depois perfil facial · Clínica Stimma">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Perfil facial</p><p>Stimma · Goiânia</p></div>
-      </div>
-      <div class="case reveal d1">
-        <img src="assets/antes-depois-5.jpeg" alt="Antes e depois harmonização natural · Clínica Stimma">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Harmonização natural</p><p>Stimma · Goiânia</p></div>
-      </div>
-    </div>
-    <p class="results-disc reveal">Resultados variam conforme avaliação individual. Fotografias com consentimento.</p>
-  </div>
 </section>
 
 <!-- O QUE A ANÁLISE OBSERVA -->
@@ -648,13 +662,58 @@ footer { background:var(--dark); padding:64px 40px 44px; }
   </div>
 </section>
 
+<!-- PARA QUEM FAZ SENTIDO -->
+<section class="fit-section">
+  <div class="fit-inner">
+    <div class="fit-copy reveal">
+      <p class="lbl">Para quem faz sentido</p>
+      <h2>Não é sobre mudar o rosto. <em>É sobre enxergar o caminho certo.</em></h2>
+      <p>Esta análise foi pensada para quem sente que algo mudou na imagem, mas deseja uma orientação inicial antes de decidir por qualquer procedimento.</p>
+    </div>
+    <div class="fit-list reveal d1">
+      <div><span>01</span><p>Você percebe sinais de cansaço, queda ou perda de contorno.</p></div>
+      <div><span>02</span><p>Você quer melhorar sem exageros e sem perder sua identidade.</p></div>
+      <div><span>03</span><p>Você valoriza planejamento, segurança e acompanhamento profissional.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTES/DEPOIS -->
+<section class="results editorial-results">
+  <div class="results-inner">
+    <div class="results-head reveal">
+      <p class="lbl">Resultados reais</p>
+      <h2>Naturalidade não acontece por acaso.</h2>
+      <p>Os antes e depois entram como prova de critério: pequenas decisões, quando bem planejadas, podem devolver harmonia sem apagar a identidade.</p>
+    </div>
+    <div class="cases cases-editorial">
+      <div class="case case-large reveal d1">
+        <img src="assets/antes-depois-rejuvenescimento-01.jpg" alt="Antes e depois harmonização facial natural">
+        <div class="case-overlay"></div>
+        <div class="case-label"><p>Rejuvenescimento com naturalidade</p><p>Resultado real · Stimma</p></div>
+      </div>
+      <div class="case reveal d2">
+        <img src="assets/antes-depois-perfil-01.jpg" alt="Antes e depois perfil facial">
+        <div class="case-overlay"></div>
+        <div class="case-label"><p>Contorno e sustentação</p><p>Resultado real · Stimma</p></div>
+      </div>
+      <div class="case reveal d3">
+        <img src="assets/antes-depois-labios-frontal.jpg" alt="Antes e depois lábios naturais">
+        <div class="case-overlay"></div>
+        <div class="case-label"><p>Realce labial natural</p><p>Resultado real · Stimma</p></div>
+      </div>
+    </div>
+    <p class="results-disc reveal">Resultados variam conforme avaliação individual. Fotografias com consentimento.</p>
+  </div>
+</section>
+
 <!-- DRA LARISSA -->
 <section class="dra">
   <div class="dra-inner">
     <div class="reveal">
       <div class="dra-photo-wrap">
         <div class="dra-frame">
-          <img src="assets/dra-larissa-2.jpeg" alt="Dra. Larissa Andrade">
+          <img src="assets/dra-larissa-editorial-02.jpeg" alt="Dra. Larissa Andrade">
         </div>
         <div class="dra-badge">
           <div class="dra-badge-name">Dra. Larissa Andrade</div>
