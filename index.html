@@ -29,13 +29,13 @@ src="https://www.facebook.com/tr?id=954165999636794&ev=PageView&noscript=1"
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://stimma.netlify.app/">
 <meta property="og:title" content="Análise Facial Online · Clínica Stimma">
-<meta property="og:description" content="Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério. Conduzida pela equipe da Dra. Larissa Andrade · Goiânia.">
+<meta property="og:description" content="Envie uma foto e receba sua análise facial online na hora. Conduzida pela equipe da Dra. Larissa Andrade · Goiânia.">
 <meta property="og:image" content="https://stimma.netlify.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério. Clínica Stimma · Goiânia.">
+<meta name="description" content="Envie uma foto e receba sua análise facial online na hora. Clínica Stimma · Goiânia.">
 
 <style>
 /* ── TOKENS ── */
@@ -539,56 +539,88 @@ footer { background:var(--dark); padding:64px 40px 44px; }
   .report-metrics { grid-template-columns:1fr 1fr; }
 }
 
-/* ── AJUSTE IDENTIDADE VISUAL: editorial premium ── */
-body { background:#F6F0E8; }
-nav.scrolled { background:rgba(246,240,232,0.96); }
-.hero { background:#F6F0E8; }
-.hero-left::before { content:'STIMMA'; position:absolute; top:92px; left:56px; font-family:var(--serif); font-size:.7rem; letter-spacing:.36em; color:rgba(30,27,22,.38); }
-.hero-title { max-width:620px; font-size:clamp(3rem,5.4vw,6.4rem); letter-spacing:-.035em; line-height:.96; }
-.hero-sub { max-width:470px; font-size:1rem; }
-.hero-right { background:#15130f; }
-.hero-right::before { background:linear-gradient(to right,#F6F0E8 0%,rgba(246,240,232,.72) 23%,transparent 55%); }
-.c-slide img { filter:saturate(.55) contrast(1.08) brightness(.88); object-position:center center; }
-.btn-primary,.btn-submit,.result-cta { border-radius:999px; }
-.nav-cta { border-radius:999px; background:rgba(253,252,250,.34); }
-.lbl { color:#9B7A45; }
-.observe { background:#181511; color:var(--cream); }
-.observe-head h2,.observe-head p { color:var(--cream); }
-.observe-head p { color:rgba(245,241,235,.68); }
-.observe-grid { gap:1px; }
-.obs-card { background:#201C16; }
-.obs-label { color:rgba(245,241,235,.82); }
-.obs-icon path,.obs-icon circle,.obs-icon line,.obs-icon rect { stroke:rgba(212,180,122,.72); }
-.fit-section { padding:110px 40px; background:#F6F0E8; border-top:1px solid var(--border); }
-.fit-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1.1fr; gap:90px; align-items:start; }
-.fit-copy h2 { font-family:var(--serif); font-size:clamp(2rem,3.5vw,3.8rem); font-weight:400; line-height:1.03; letter-spacing:-.025em; color:var(--dark); margin-bottom:24px; }
-.fit-copy h2 em { color:var(--sub); font-style:italic; font-weight:300; }
-.fit-copy p { color:var(--sub); font-size:.92rem; line-height:2; max-width:470px; }
-.fit-list { display:grid; gap:2px; }
-.fit-list div { background:var(--white); padding:28px 30px; display:grid; grid-template-columns:52px 1fr; gap:18px; align-items:start; border:1px solid rgba(30,27,22,.05); }
-.fit-list span { font-family:var(--serif); font-size:1.25rem; color:var(--gold); font-style:italic; }
-.fit-list p { font-size:.88rem; color:var(--text); line-height:1.85; }
-.editorial-results { background:#FDFCFA; }
-.cases-editorial { grid-template-columns:1.25fr .9fr; grid-template-rows:1fr 1fr; gap:10px; }
-.cases-editorial .case-large { grid-row:span 2; }
-.cases-editorial .case img { aspect-ratio:4/5; }
-.cases-editorial .case-large img { aspect-ratio:4/5; }
-.dra { background:#171410; color:var(--cream); }
-.dra-content .dra-title,.dra-sig { color:var(--cream); }
-.dra-content .dra-title em,.dra-text { color:rgba(245,241,235,.66); }
-.dra-frame img { filter:saturate(.65) contrast(1.03); }
-.dra-badge { background:#F6F0E8; }
-.dra-badge-name { color:var(--dark); }
-.dra-cta { color:var(--cream); border-color:rgba(245,241,235,.72); }
-.form-section { background:#F6F0E8; }
-.form-card { box-shadow:0 28px 80px rgba(30,27,22,.08); }
-@media(max-width:768px){
-  .hero-left::before{left:20px;top:70px;}
-  .hero-title{font-size:clamp(2.55rem,11vw,4.2rem);}
-  .fit-inner{grid-template-columns:1fr;gap:40px;}
-  .fit-section{padding:72px 20px;}
-  .cases-editorial{grid-template-columns:1fr;grid-template-rows:auto;}
-  .cases-editorial .case-large{grid-row:auto;}
+
+/* ── AJUSTE PREMIUM ESTRATÉGICO ── */
+body { background:#F4EFE7; }
+.nav-premium { justify-content:center; mix-blend-mode:normal; }
+.nav-premium .nav-cta { background:rgba(244,239,231,.72); backdrop-filter:blur(14px); border-color:rgba(30,27,22,.18); }
+.hero-premium { min-height:100svh; padding:104px 40px 54px; position:relative; overflow:hidden; background:radial-gradient(circle at 74% 18%, rgba(184,151,90,.18), transparent 28%), linear-gradient(135deg,#F6F1EA 0%,#EDE4D8 48%,#D9CBBB 100%); }
+.hero-bg-mark { position:absolute; right:-4vw; bottom:-3vw; font-family:var(--serif); font-size:clamp(5rem,16vw,18rem); line-height:.75; letter-spacing:.08em; color:rgba(30,27,22,.035); pointer-events:none; }
+.hero-premium-inner { max-width:1180px; margin:0 auto; min-height:calc(100svh - 158px); display:grid; grid-template-columns:.92fr 1.08fr; gap:64px; align-items:center; position:relative; z-index:2; }
+.hero-copy h1 { font-family:var(--serif); font-size:clamp(2.75rem,5vw,5.8rem); font-weight:400; line-height:.98; letter-spacing:-.035em; color:var(--dark); max-width:620px; margin-bottom:24px; }
+.hero-copy h1 em { display:block; font-style:italic; color:#6C5D4A; font-weight:300; margin-top:8px; }
+.hero-kicker { font-size:.62rem; font-weight:500; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+.hero-lead { max-width:520px; font-size:1rem; line-height:1.9; color:#554B3F; margin-bottom:34px; }
+.hero-cta-row { display:flex; gap:18px; align-items:center; flex-wrap:wrap; margin-bottom:36px; }
+.hero-cta-row span { font-size:.67rem; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; }
+.btn-hero { box-shadow:0 22px 50px rgba(30,27,22,.18); }
+.hero-trust-grid { display:grid; grid-template-columns:repeat(3,1fr); max-width:560px; border-top:1px solid rgba(30,27,22,.12); border-bottom:1px solid rgba(30,27,22,.12); }
+.hero-trust-grid div { padding:18px 18px 18px 0; border-right:1px solid rgba(30,27,22,.1); }
+.hero-trust-grid div:last-child { border-right:none; padding-right:0; }
+.hero-trust-grid strong { display:block; font-family:var(--serif); font-weight:400; color:var(--gold); font-size:1.4rem; line-height:1; margin-bottom:6px; }
+.hero-trust-grid span { display:block; font-size:.72rem; color:#5A5248; line-height:1.5; }
+.hero-visual { position:relative; min-height:620px; }
+.hero-main-photo { position:absolute; right:4%; top:0; width:min(74%,470px); height:610px; overflow:hidden; border-radius:0; box-shadow:0 35px 80px rgba(30,27,22,.18); background:var(--dark); }
+.hero-main-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:saturate(.88) contrast(.98); }
+.hero-main-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(30,27,22,.52), transparent 46%); pointer-events:none; }
+.photo-caption { position:absolute; left:26px; right:26px; bottom:24px; z-index:2; color:var(--cream); }
+.photo-caption span { display:block; font-family:var(--serif); font-size:1.25rem; }
+.photo-caption small { display:block; font-size:.58rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light); }
+.hero-proof-card { position:absolute; background:var(--white); padding:8px; box-shadow:0 28px 60px rgba(30,27,22,.18); width:235px; }
+.hero-proof-card img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; filter:saturate(.88); }
+.hero-proof-card span { display:block; font-size:.55rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); padding:10px 4px 2px; }
+.proof-one { left:0; top:68px; transform:rotate(-2deg); }
+.proof-two { left:12%; bottom:26px; transform:rotate(2deg); width:255px; }
+.hero-mobile-proof { display:none; }
+.fit-section { padding:78px 40px; background:#1E1B16; color:var(--cream); }
+.fit-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:center; }
+.fit-head h2 { font-family:var(--serif); font-weight:400; font-size:clamp(1.8rem,3vw,3rem); line-height:1.12; color:var(--cream); }
+.fit-list { display:flex; flex-wrap:wrap; gap:10px; }
+.fit-list span { border:1px solid rgba(212,180,122,.28); padding:12px 16px; color:rgba(245,241,235,.82); font-size:.82rem; background:rgba(255,255,255,.03); }
+.observe-premium { background:#F4EFE7; }
+.observe-premium .obs-card { border:1px solid rgba(30,27,22,.06); }
+.results-premium { background:#FFFCF8; }
+.premium-cases { grid-template-columns:repeat(4,1fr); gap:10px; }
+.premium-cases .case img { aspect-ratio:3/4; }
+.dra-premium { background:#F4EFE7; }
+.dra-premium .dra-inner { grid-template-columns:.9fr 1.1fr; }
+.dra-premium .dra-frame img { object-position:center center; }
+.how-section { padding:100px 40px; background:#FFFCF8; }
+.how-inner { max-width:1100px; margin:0 auto; }
+.how-head { max-width:640px; margin:0 auto 48px; text-align:center; }
+.how-head h2 { font-family:var(--serif); font-weight:400; font-size:clamp(1.8rem,3vw,2.8rem); line-height:1.15; color:var(--dark); }
+.how-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+.how-grid div { background:#F4EFE7; padding:34px 28px; min-height:210px; }
+.how-grid strong { font-family:var(--serif); color:var(--gold); font-size:1.5rem; font-weight:400; }
+.how-grid h3 { font-family:var(--serif); font-size:1.25rem; font-weight:400; color:var(--dark); margin:20px 0 8px; }
+.how-grid p { font-size:.82rem; line-height:1.8; color:var(--sub); }
+.form-premium { background:#1E1B16; }
+.form-premium .lbl, .form-premium .fi-trust-item { color:var(--gold-light); }
+.form-premium .fi-title, .form-premium .fi-title em { color:var(--cream); }
+.form-premium .fi-desc { color:rgba(245,241,235,.62); }
+.form-premium .form-card { box-shadow:0 36px 80px rgba(0,0,0,.22); }
+.form-premium .fi-dot { background:var(--gold-light); }
+@media(max-width:900px){
+  .hero-premium { padding:86px 20px 44px; }
+  .hero-premium-inner { grid-template-columns:1fr; gap:34px; min-height:auto; }
+  .hero-copy h1 { font-size:clamp(2.6rem,11vw,4.3rem); }
+  .hero-lead { font-size:.94rem; }
+  .hero-visual { min-height:460px; }
+  .hero-main-photo { position:relative; width:78%; height:430px; right:auto; margin-left:auto; }
+  .hero-proof-card { display:none; }
+  .hero-mobile-proof { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:18px 20px 0; position:relative; z-index:2; }
+  .hero-mobile-proof img { width:100%; aspect-ratio:1/1; object-fit:cover; }
+  .hero-trust-grid { grid-template-columns:1fr; }
+  .hero-trust-grid div { border-right:none; border-bottom:1px solid rgba(30,27,22,.1); padding:14px 0; }
+  .hero-trust-grid div:last-child { border-bottom:none; }
+  .fit-inner { grid-template-columns:1fr; gap:28px; }
+  .premium-cases { grid-template-columns:1fr 1fr; }
+  .how-grid { grid-template-columns:1fr; }
+}
+@media(max-width:520px){
+  .hero-main-photo { width:88%; height:390px; }
+  .premium-cases { grid-template-columns:1fr; }
+  .fit-list span { width:100%; }
 }
 
 </style>
@@ -596,50 +628,74 @@ nav.scrolled { background:rgba(246,240,232,0.96); }
 <body>
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="#analise" class="nav-cta">Enviar foto para análise</a>
+<nav id="nav" class="nav-premium">
+  <a href="#analise" class="nav-cta">Fazer análise facial</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Análise facial online · Clínica Stimma</p>
-    <h1 class="hero-title">
-      Seu rosto comunica antes de qualquer procedimento.<br>
-      <em>Entenda o que vale a pena preservar, realçar ou tratar.</em>
-    </h1>
-    <p class="hero-sub">Envie suas fotos e receba uma leitura estética inicial para entender seu rosto com mais critério.</p>
-    <div class="hero-actions">
-      <a href="#analise" class="btn-primary">Enviar foto para análise</a>
-      <p class="hero-trust">Online · Inicial · Com direcionamento humano</p>
+<!-- HERO PREMIUM -->
+<section class="hero-premium">
+  <div class="hero-bg-mark">STIMMA</div>
+  <div class="hero-premium-inner">
+    <div class="hero-copy reveal">
+      <p class="hero-kicker">Análise facial online · Clínica Stimma</p>
+      <h1>Descubra o que mudou no seu rosto <em>antes de pensar em qualquer procedimento.</em></h1>
+      <p class="hero-lead">Envie suas fotos e receba uma análise facial inicial com uma leitura estética sobre proporção, sustentação, contorno e sinais de cansaço.</p>
+      <div class="hero-cta-row">
+        <a href="#analise" class="btn-primary btn-hero">Fazer minha análise facial</a>
+        <span>Online · Instantânea · Informativa</span>
+      </div>
+      <div class="hero-trust-grid">
+        <div><strong>01</strong><span>Envie suas fotos</span></div>
+        <div><strong>02</strong><span>Receba uma leitura inicial</span></div>
+        <div><strong>03</strong><span>Agende se fizer sentido</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal d1">
+      <div class="hero-main-photo">
+        <img src="assets/dra-larissa-hero.jpeg" alt="Dra. Larissa Andrade · Clínica Stimma">
+        <div class="photo-caption"><span>Dra. Larissa Andrade</span><small>Harmonização facial · Goiânia</small></div>
+      </div>
+      <div class="hero-proof-card proof-one">
+        <img src="assets/antes-depois-rejuvenescimento.jpg" alt="Resultado real de harmonização facial Stimma">
+        <span>Resultado real</span>
+      </div>
+      <div class="hero-proof-card proof-two">
+        <img src="assets/antes-depois-perfil.jpg" alt="Antes e depois de perfil Stimma">
+        <span>Antes & depois</span>
+      </div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-carousel" id="heroCarousel">
-      <div class="c-slide active"><img src="assets/dra-larissa-editorial-01.jpeg" alt="Resultado natural Stimma"></div>
-      <div class="c-slide"><img src="assets/dra-larissa-editorial-02.jpeg" alt="Resultado harmonização Stimma"></div>
+  <div class="hero-mobile-proof">
+    <img src="assets/antes-depois-rejuvenescimento.jpg" alt="Resultado real Stimma">
+    <img src="assets/antes-depois-perfil.jpg" alt="Antes e depois Stimma">
+  </div>
+</section>
+
+<!-- QUALIFICAÇÃO -->
+<section class="fit-section">
+  <div class="fit-inner">
+    <div class="fit-head reveal">
+      <p class="lbl">Essa análise é para você que percebe</p>
+      <h2>Pequenas mudanças no rosto podem alterar a forma como você se vê.</h2>
     </div>
-    <div class="hero-face-guide">
-      <svg class="face-svg" viewBox="0 0 220 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="110" cy="145" rx="86" ry="122" stroke="white" stroke-width="0.5"/>
-        <ellipse cx="110" cy="145" rx="60" ry="92" stroke="white" stroke-width="0.3"/>
-        <line x1="110" y1="25" x2="110" y2="265" stroke="white" stroke-width="0.3"/>
-        <line x1="24" y1="120" x2="196" y2="120" stroke="white" stroke-width="0.3"/>
-        <line x1="24" y1="165" x2="196" y2="165" stroke="white" stroke-width="0.3"/>
-        <line x1="24" y1="205" x2="196" y2="205" stroke="white" stroke-width="0.3"/>
-      </svg>
+    <div class="fit-list reveal d1">
+      <span>Perda de contorno</span>
+      <span>Aparência de cansaço</span>
+      <span>Rosto mais “caído”</span>
+      <span>Mudanças no sorriso</span>
+      <span>Vontade de melhorar sem exageros</span>
     </div>
   </div>
-  <div class="hero-scroll"><span class="scroll-bar"></span><span>Ver resultados</span></div>
 </section>
 
 <!-- O QUE A ANÁLISE OBSERVA -->
-<section class="observe">
+<section class="observe observe-premium">
   <div class="observe-inner">
     <div class="observe-head reveal">
       <p class="lbl">O que a análise observa</p>
       <h2>Uma leitura inicial do seu rosto.</h2>
-      <p>A análise inicial observa sinais visuais que podem ajudar você a compreender melhor o que mudou.</p>
+      <p>A análise observa sinais visuais que podem ajudar você a compreender melhor o que mudou — sem substituir uma avaliação presencial.</p>
     </div>
     <div class="observe-grid">
       <div class="obs-card reveal">
@@ -662,63 +718,31 @@ nav.scrolled { background:rgba(246,240,232,0.96); }
   </div>
 </section>
 
-<!-- PARA QUEM FAZ SENTIDO -->
-<section class="fit-section">
-  <div class="fit-inner">
-    <div class="fit-copy reveal">
-      <p class="lbl">Para quem faz sentido</p>
-      <h2>Não é sobre mudar o rosto. <em>É sobre enxergar o caminho certo.</em></h2>
-      <p>Esta análise foi pensada para quem sente que algo mudou na imagem, mas deseja uma orientação inicial antes de decidir por qualquer procedimento.</p>
-    </div>
-    <div class="fit-list reveal d1">
-      <div><span>01</span><p>Você percebe sinais de cansaço, queda ou perda de contorno.</p></div>
-      <div><span>02</span><p>Você quer melhorar sem exageros e sem perder sua identidade.</p></div>
-      <div><span>03</span><p>Você valoriza planejamento, segurança e acompanhamento profissional.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ANTES/DEPOIS -->
-<section class="results editorial-results">
+<section class="results results-premium">
   <div class="results-inner">
     <div class="results-head reveal">
-      <p class="lbl">Resultados reais</p>
-      <h2>Naturalidade não acontece por acaso.</h2>
-      <p>Os antes e depois entram como prova de critério: pequenas decisões, quando bem planejadas, podem devolver harmonia sem apagar a identidade.</p>
+      <p class="lbl">Resultados reais Stimma</p>
+      <h2>Naturalidade não acontece por acaso. Ela nasce de planejamento.</h2>
+      <p>Os resultados abaixo mostram abordagens diferentes, sempre respeitando estrutura, expressão e individualidade.</p>
     </div>
-    <div class="cases cases-editorial">
-      <div class="case case-large reveal d1">
-        <img src="assets/antes-depois-rejuvenescimento-01.jpg" alt="Antes e depois harmonização facial natural">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Rejuvenescimento com naturalidade</p><p>Resultado real · Stimma</p></div>
-      </div>
-      <div class="case reveal d2">
-        <img src="assets/antes-depois-perfil-01.jpg" alt="Antes e depois perfil facial">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Contorno e sustentação</p><p>Resultado real · Stimma</p></div>
-      </div>
-      <div class="case reveal d3">
-        <img src="assets/antes-depois-labios-frontal.jpg" alt="Antes e depois lábios naturais">
-        <div class="case-overlay"></div>
-        <div class="case-label"><p>Realce labial natural</p><p>Resultado real · Stimma</p></div>
-      </div>
+    <div class="cases premium-cases">
+      <div class="case reveal d1"><img src="assets/antes-depois-rejuvenescimento.jpg" alt="Antes e depois harmonização facial"><div class="case-overlay"></div><div class="case-label"><p>Rejuvenescimento facial</p><p>Resultado real Stimma</p></div></div>
+      <div class="case reveal d2"><img src="assets/antes-depois-perfil.jpg" alt="Antes e depois perfil facial"><div class="case-overlay"></div><div class="case-label"><p>Perfil e contorno</p><p>Resultado real Stimma</p></div></div>
+      <div class="case reveal d3"><img src="assets/antes-depois-labial-frontal.jpeg" alt="Antes e depois lábios frontal"><div class="case-overlay"></div><div class="case-label"><p>Harmonia facial</p><p>Resultado real Stimma</p></div></div>
+      <div class="case reveal d4"><img src="assets/antes-depois-perfil-nariz.jpg" alt="Antes e depois perfil nasal"><div class="case-overlay"></div><div class="case-label"><p>Perfil facial</p><p>Resultado real Stimma</p></div></div>
     </div>
-    <p class="results-disc reveal">Resultados variam conforme avaliação individual. Fotografias com consentimento.</p>
+    <p class="results-disc reveal">Resultados variam conforme avaliação individual. Fotografias utilizadas com consentimento.</p>
   </div>
 </section>
 
 <!-- DRA LARISSA -->
-<section class="dra">
+<section class="dra dra-premium">
   <div class="dra-inner">
     <div class="reveal">
       <div class="dra-photo-wrap">
-        <div class="dra-frame">
-          <img src="assets/dra-larissa-editorial-02.jpeg" alt="Dra. Larissa Andrade">
-        </div>
-        <div class="dra-badge">
-          <div class="dra-badge-name">Dra. Larissa Andrade</div>
-          <div class="dra-badge-role">Harmonização Facial · Stimma</div>
-        </div>
+        <div class="dra-frame"><img src="assets/dra-larissa-editorial.jpeg" alt="Dra. Larissa Andrade"></div>
+        <div class="dra-badge"><div class="dra-badge-name">Dra. Larissa Andrade</div><div class="dra-badge-role">Harmonização Facial · Stimma</div></div>
       </div>
     </div>
     <div class="dra-content reveal d2">
@@ -728,19 +752,34 @@ nav.scrolled { background:rgba(246,240,232,0.96); }
       <p class="dra-text">A inteligência artificial ajuda a organizar uma percepção inicial do rosto. Mas cada decisão estética precisa considerar estrutura, expressão, pele, histórico e objetivos individuais.</p>
       <p class="dra-text">Por isso, a análise é apenas o primeiro passo para um planejamento facial seguro, natural e personalizado.</p>
       <p class="dra-sig">Dra. Larissa Andrade<br>Harmonização Facial · Goiânia</p>
-      <a href="#analise" class="dra-cta">Conhecer o cuidado da Dra. Larissa →</a>
+      <a href="#analise" class="dra-cta">Iniciar minha análise →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="how-head reveal">
+      <p class="lbl">Como funciona</p>
+      <h2>Um primeiro passo simples, sem pressão e com mais clareza.</h2>
+    </div>
+    <div class="how-grid reveal d1">
+      <div><strong>01</strong><h3>Preencha seus dados</h3><p>Conte o principal incômodo que você percebe hoje.</p></div>
+      <div><strong>02</strong><h3>Envie suas fotos</h3><p>Fotos de frente e perfil ajudam a leitura estética inicial.</p></div>
+      <div><strong>03</strong><h3>Receba a análise</h3><p>Você recebe uma orientação inicial e pode seguir para consulta presencial.</p></div>
     </div>
   </div>
 </section>
 
 <!-- FORM -->
-<section class="form-section" id="analise">
+<section class="form-section form-premium" id="analise">
   <div class="form-inner">
     <div class="form-info reveal">
       <p class="lbl">Análise facial online</p>
       <h2 class="fi-title">Antes de qualquer<br>procedimento, <em>entenda<br>o seu rosto.</em></h2>
       <div class="section-divider"></div>
-      <p class="fi-desc">Preencha os dados e envie uma foto. Sua análise inicial é gerada na hora.</p>
+      <p class="fi-desc">Preencha os dados e envie suas fotos. Sua análise inicial é gerada na hora.</p>
       <div class="fi-trust">
         <div class="fi-trust-item"><div class="fi-dot"></div><span>Análise instantânea e informativa</span></div>
         <div class="fi-trust-item"><div class="fi-dot"></div><span>Fotos tratadas com confidencialidade</span></div>
@@ -754,60 +793,19 @@ nav.scrolled { background:rgba(246,240,232,0.96); }
           <div class="field"><label for="whatsapp">WhatsApp *</label><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" maxlength="15"><span class="err-msg">Número inválido</span></div>
         </div>
         <div class="form-row">
-          <div class="field"><label for="age">Faixa etária *</label>
-            <select id="age"><option value="">Selecione</option><option>18–24 anos</option><option>25–34 anos</option><option>35–44 anos</option><option>45–54 anos</option><option>55+ anos</option></select>
-            <span class="err-msg">Campo obrigatório</span>
-          </div>
-          <div class="field"><label for="gender">Gênero *</label>
-            <select id="gender"><option value="">Selecione</option><option>Feminino</option><option>Masculino</option><option>Prefiro não informar</option></select>
-            <span class="err-msg">Campo obrigatório</span>
-          </div>
+          <div class="field"><label for="age">Faixa etária *</label><select id="age"><option value="">Selecione</option><option>18–24 anos</option><option>25–34 anos</option><option>35–44 anos</option><option>45–54 anos</option><option>55+ anos</option></select><span class="err-msg">Campo obrigatório</span></div>
+          <div class="field"><label for="gender">Gênero *</label><select id="gender"><option value="">Selecione</option><option>Feminino</option><option>Masculino</option><option>Prefiro não informar</option></select><span class="err-msg">Campo obrigatório</span></div>
         </div>
-        <div class="field"><label for="concern">Principal incômodo *</label>
-          <textarea id="concern" placeholder="Ex: aparência de cansaço, perda de contorno, flacidez…"></textarea>
-          <span class="err-msg">Descreva sua preocupação</span>
-        </div>
-        <p class="upload-hint-text">Envie uma foto nítida, de frente, com boa iluminação e sem filtros. (Opcional — usada apenas para registro interno)</p>
-        <input type="file" id="photo-frontal"  class="upload-input">
-        <input type="file" id="photo-direito"  class="upload-input">
-        <input type="file" id="photo-esquerdo" class="upload-input">
+        <div class="field"><label for="concern">Principal incômodo *</label><textarea id="concern" placeholder="Ex: aparência de cansaço, perda de contorno, flacidez…"></textarea><span class="err-msg">Descreva sua preocupação</span></div>
+        <p class="upload-hint-text">Envie fotos nítidas, com boa iluminação e sem filtros. Elas ajudam a leitura estética inicial.</p>
+        <input type="file" id="photo-frontal" class="upload-input"><input type="file" id="photo-direito" class="upload-input"><input type="file" id="photo-esquerdo" class="upload-input">
         <div class="upload-group">
-          <div class="upload-item">
-            <label>Frontal</label>
-            <div class="upload-box" id="box-frontal">
-              <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg>
-              <span class="upload-hint-label">Toque para<br>adicionar</span>
-              <img class="upload-preview" id="prev-frontal" alt="">
-              <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
-          </div>
-          <div class="upload-item">
-            <label>Perfil D.</label>
-            <div class="upload-box" id="box-perfil-d">
-              <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg>
-              <span class="upload-hint-label">Perfil<br>direito</span>
-              <img class="upload-preview" id="prev-direito" alt="">
-              <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
-          </div>
-          <div class="upload-item">
-            <label>Perfil E.</label>
-            <div class="upload-box" id="box-perfil-e">
-              <svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg>
-              <span class="upload-hint-label">Perfil<br>esquerdo</span>
-              <img class="upload-preview" id="prev-esquerdo" alt="">
-              <div class="upload-overlay"><span>Alterar</span></div>
-            </div>
-          </div>
+          <div class="upload-item"><label>Frontal</label><div class="upload-box" id="box-frontal"><svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg><span class="upload-hint-label">Toque para<br>adicionar</span><img class="upload-preview" id="prev-frontal" alt=""><div class="upload-overlay"><span>Alterar</span></div></div></div>
+          <div class="upload-item"><label>Perfil D.</label><div class="upload-box" id="box-perfil-d"><svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg><span class="upload-hint-label">Perfil<br>direito</span><img class="upload-preview" id="prev-direito" alt=""><div class="upload-overlay"><span>Alterar</span></div></div></div>
+          <div class="upload-item"><label>Perfil E.</label><div class="upload-box" id="box-perfil-e"><svg class="upload-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#B5AFA9" stroke-width="1"/><circle cx="10" cy="10" r="3" stroke="#B5AFA9" stroke-width="1"/></svg><span class="upload-hint-label">Perfil<br>esquerdo</span><img class="upload-preview" id="prev-esquerdo" alt=""><div class="upload-overlay"><span>Alterar</span></div></div></div>
         </div>
-        <div class="cb-field">
-          <input type="checkbox" id="consent">
-          <span>Estou ciente de que esta análise é uma orientação estética inicial e não substitui avaliação profissional presencial.</span>
-        </div>
-        <button type="submit" class="btn-submit" id="submitBtn">
-          <span class="btn-text">Gerar minha análise inicial</span>
-          <span class="btn-loading"><div class="spinner"></div><span>Gerando análise personalizada…</span></span>
-        </button>
+        <div class="cb-field"><input type="checkbox" id="consent"><span>Estou ciente de que esta análise é uma orientação estética inicial e não substitui avaliação profissional presencial.</span></div>
+        <button type="submit" class="btn-submit" id="submitBtn"><span class="btn-text">Gerar minha análise inicial</span><span class="btn-loading"><div class="spinner"></div><span>Gerando análise personalizada…</span></span></button>
         <p class="legal-text">A análise facial online é realizada com auxílio de inteligência artificial e possui caráter exclusivamente informativo. Não substitui consulta presencial, avaliação clínica, diagnóstico, prescrição ou indicação individualizada de tratamento por profissional habilitado.</p>
       </form>
     </div>
@@ -818,34 +816,11 @@ nav.scrolled { background:rgba(246,240,232,0.96); }
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-signature"><span class="brand">STIMMA</span><span class="doctor">Dra. Larissa Andrade</span></div>
-        <p class="footer-tagline">"Mais que procedimentos, experiências transformadoras."</p>
-      </div>
-      <div class="footer-address">
-        <strong>Localização</strong>
-        Edifício Lourenço Office<br>
-        Av. T-7, 371 · Sala 2107<br>
-        St. Oeste · Goiânia · GO · 74140-110
-      </div>
-      <div class="footer-social">
-        <strong>Contato</strong>
-        <div class="footer-links">
-          <a href="#" class="footer-link" id="footer-wp">
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1C3.686 1 1 3.686 1 7c0 1.06.279 2.056.766 2.917L1 13l3.176-.75A5.96 5.96 0 007 13c3.314 0 6-2.686 6-6S10.314 1 7 1z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-            WhatsApp
-          </a>
-          <a href="https://instagram.com/stimma.clinica" class="footer-link" target="_blank">
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1"/><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1"/><circle cx="10.5" cy="3.5" r="0.6" fill="currentColor"/></svg>
-            @stimma.clinica
-          </a>
-        </div>
-      </div>
+      <div class="footer-brand"><div class="footer-signature"><span class="brand">STIMMA</span><span class="doctor">Dra. Larissa Andrade</span></div><p class="footer-tagline">“Mais que procedimentos, experiências transformadoras.”</p></div>
+      <div class="footer-address"><strong>Localização</strong>Edifício Lourenço Office<br>Av. T-7, 371 · Sala 2107<br>St. Oeste · Goiânia · GO · 74140-110</div>
+      <div class="footer-social"><strong>Contato</strong><div class="footer-links"><a href="#" class="footer-link" id="footer-wp"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1C3.686 1 1 3.686 1 7c0 1.06.279 2.056.766 2.917L1 13l3.176-.75A5.96 5.96 0 007 13c3.314 0 6-2.686 6-6S10.314 1 7 1z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>WhatsApp</a><a href="https://instagram.com/stimma.clinica" class="footer-link" target="_blank"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1"/><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1"/><circle cx="10.5" cy="3.5" r="0.6" fill="currentColor"/></svg>@stimma.clinica</a></div></div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-legal">© 2025 Clínica Stimma · Goiânia, Goiás · Todos os direitos reservados</p>
-      <p class="footer-privacy">As imagens enviadas são utilizadas exclusivamente para registro interno e tratadas com confidencialidade.</p>
-    </div>
+    <div class="footer-bottom"><p class="footer-legal">© 2025 Clínica Stimma · Goiânia, Goiás · Todos os direitos reservados</p><p class="footer-privacy">As imagens enviadas são utilizadas exclusivamente para registro interno e tratadas com confidencialidade.</p></div>
   </div>
 </footer>
 
